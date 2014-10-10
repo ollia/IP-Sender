@@ -2,7 +2,6 @@
 {
     using System;
     using System.Configuration;
-    using System.Diagnostics;
     using System.Net;
     using System.Net.Mail;
 
@@ -17,28 +16,28 @@
                 var sender = ConfigurationManager.AppSettings.Get("MailSender");
                 var receiver = ConfigurationManager.AppSettings.Get("MailReceiver");
                 var senderPassword = ConfigurationManager.AppSettings.Get("SenderPassword");
-                var mail = new MailMessage(sender, receiver);
+
+                bool enableSsl;
+                bool.TryParse(ConfigurationManager.AppSettings.Get("EnableSsl"), out enableSsl);
+
                 var client = new SmtpClient
                 {
                     Port = port,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Host = smtp
+                    Host = smtp,
+                    Credentials = new NetworkCredential(sender, senderPassword),
+                    EnableSsl = enableSsl
                 };
 
-                client.Credentials = new NetworkCredential(sender, senderPassword);
-                client.EnableSsl = true;
+                var mail = new MailMessage(sender, receiver) {Subject = "IP-address change", Body = message};
 
-                mail.Subject = "IP-address change";
-                mail.Body = message;
-                Trace.Write(DateTime.Now + ":" + message);
-                Trace.Write(Environment.NewLine);
+                TraceLogger.Write("Sending mail: " + message);                
                 client.Send(mail);
             }
             catch (Exception e)
             {
-                Trace.Write(DateTime.Now.ToString("s") + ":" + "Mail sender exception: " + e);
-                Trace.Write(Environment.NewLine);
+                TraceLogger.Write("Mail sender exception: " + e);
             }
         }
     }

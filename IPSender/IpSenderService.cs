@@ -1,6 +1,5 @@
 ﻿namespace IPSender
 {
-    using System.Diagnostics;
     using System.Net.NetworkInformation;
     using System;
     using System.ServiceProcess;
@@ -15,14 +14,13 @@
 
         protected override void OnStart(string[] args)
         {
-            Trace.Write(DateTime.Now.ToString("s") + ":" + "Starting IP-Sender");
-            Trace.Write(Environment.NewLine);
+            TraceLogger.Write("Starting IP-Sender");
             NetworkChange.NetworkAddressChanged += AddressChangedCallback;
         }
 
         protected override void OnStop()
         {
-            this.Dispose();
+            TraceLogger.Write("Stopping IP-Sender");
         }
 
         static void AddressChangedCallback(object sender, EventArgs e)
@@ -52,8 +50,7 @@
             }
             catch (Exception ex)
             {
-                Trace.Write(DateTime.Now.ToString("s") + ":" + "Address changed callback exception: " + ex);
-                Trace.Write(Environment.NewLine);
+                TraceLogger.Write("Address changed callback exception: " + ex);
             }
         }
     }
