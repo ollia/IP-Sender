@@ -66,12 +66,9 @@ disable menu anims:i:1
 disable themes:i:0
 disable cursor setting:i:0
 bitmapcachepersistenable:i:1
-full address:s:127.0.0.1
 audiomode:i:0
-redirectprinters:i:1
 redirectcomports:i:0
 redirectsmartcards:i:1
-redirectclipboard:i:1
 redirectposdevices:i:0
 autoreconnection enabled:i:1
 authentication level:i:2
@@ -88,7 +85,6 @@ promptcredentialonce:i:0
 gatewaybrokeringtype:i:0
 use redirection server name:i:0
 rdgiskdcproxy:i:0
-kdcproxyname:s:
-drivestoredirect:s:*";
+kdcproxyname:s:";
     }
 }
