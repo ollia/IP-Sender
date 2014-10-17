@@ -61,6 +61,7 @@
       <DependentUpon>IpSenderInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RdcGenerator.cs" />
     <Compile Include="TraceLogger.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,12 +2,13 @@
 {
     using System;
     using System.Configuration;
+    using System.IO;
     using System.Net;
     using System.Net.Mail;
 
     public class MailSender
     {
-        public void SendMail(string message)
+        public static void SendMail(string message, byte[] rdcFile = null)  
         {
             try
             {
@@ -30,10 +31,15 @@
                     EnableSsl = enableSsl
                 };
 
-                var mail = new MailMessage(sender, receiver) {Subject = "IP-address change", Body = message};
+                var mail = new MailMessage(sender, receiver) { Subject = "IP-address change", Body = message };
 
-                TraceLogger.Write("Sending mail: " + message);                
+                if (rdcFile != null)
+                {
+                    mail.Attachments.Add(new Attachment(new MemoryStream(rdcFile), "rdc_profile " + DateTime.Now.ToString("s") + ".rdp"));
+                }
+
                 client.Send(mail);
+                TraceLogger.Write("Mail sent: " + message + (rdcFile != null ? " with rdc file" : "without rdc file"));
             }
             catch (Exception e)
             {

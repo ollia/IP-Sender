@@ -5,7 +5,7 @@
     using System.Diagnostics;
 
     public static class TraceLogger
-    {   
+    {
         public static void Write(string message)
         {
             bool loggingEnabled;
@@ -17,7 +17,7 @@
                 Trace.Write(Environment.NewLine);
             }
             
-            if(loggingEnabled)
+            if (loggingEnabled)
             {
                 Trace.Write(DateTime.Now.ToString("s") + " : " + message);
                 Trace.Write(Environment.NewLine);
